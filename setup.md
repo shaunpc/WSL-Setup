@@ -22,6 +22,10 @@ do-release-upgrade
 ```
 code .
 ```
+|Key|Description|
+|---|-----------|
+|CTRL-K V | View Markdown side-by-side|
+
 
 ## Set up GIT
 ```
@@ -31,4 +35,30 @@ git config --global user.email "shauncotter00@gmail.com"
 add-apt-repository ppa:git-core/ppa
 apt-get install git
 git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager-core.exe"
+```
+
+
+## Set up GITHUB
+```
+TODO
+```
+
+## Set up JAVA
+```
+TODO
+```
+
+## Set up Kafka
+```
+TODO
+```
+
+## Set up MongoDB
+```
+TODO
+```
+## Close it all down
+```
+Powershell
+    $ wsl --shutdown
 ```
