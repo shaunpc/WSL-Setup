@@ -1,15 +1,30 @@
-# Setting up a development environment on a fresh WSL2 
+## From WIN11 Powershell
+ZAP any exist distribution AND the associated ROOT file structure, and reinstall fresh
+```
+$ wsl --unregister Ubuntu
+$ wsl --install Ubuntu
+```
 
+## From new UBUNTU terminal
+As part of install enter a suitable username and password, then when presented with prompt, grab this WSL-Setup script, ensure it has execute permission, and run it
+```
+$ curl https://raw.githubusercontent.com/shaunpc/WSL-Setup/master/get_ready.sh -O
+$ chmod +x get_ready.sh
+$ ~/get_ready.sh
+```
+This script attempts to automate as much of the following as possible!
+
+# Setting up a development environment on a fresh WSL2 
 Basically going to follow these guidelines
 
 https://learn.microsoft.com/en-us/windows/wsl/setup/environment
 
 ##
-## Update all components:
+## Update all components and cleanup
 ```
-apt-get update 
-apt-get upgrade
-apt-get autoremove
+sudo apt update 
+sudo apt upgrade
+sudo apt autoremove
 ```
 
 ## Update to latest Distribution
@@ -18,22 +33,14 @@ apt-get dist-upgrade
 do-release-upgrade
 ```
 
-## Add some niceities in own login script
+## Add some niceities in own login script (.profile)
 ```
-cd ~
 apt install screenfetch
 
-nano .bash-profile
-    # My specific login file
-
-    # Call local user profile file if it exsits...
-    if [ -f ~/.bashrc ]; then
-        . ~/.bashrc
-    fi
-    # Display pretty machine and login details
-    echo
-    screenfetch
-    echo
+# Display pretty machine and login details
+echo
+screenfetch
+echo
 ```
 
 
