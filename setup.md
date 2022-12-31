@@ -90,6 +90,13 @@ sudo curl -fsSLo kafka.tgz https://dlcdn.apache.org/kafka/3.3.1/kafka_2.13-3.3.1
 tar -xzf kafka.tgz
 sudo mv kafka_2.13-3.3.1 /opt/kafka
 sudo chown -R kafka:kafka /opt/kafka
+
+
+# DEFAULT KAFKA LOG DIRECTORY IS
+# A comma separated list of directories under which to store log files
+log.dirs=/tmp/kafka-logs
+
+# ALTHOUGH CAN CHANGE IT WITH THIS
 sudo -u kafka mkdir -p /opt/kafka/logs
 sudo -u kafka nano /opt/kafka/config/server.properties
     # logs configuration for Apache Kafka
@@ -99,8 +106,8 @@ sudo -u kafka nano /opt/kafka/config/server.properties
 
 ## Set up Python
 ```
-[sudo apt install python3] -- Already Installed
-sudo apt install python3-pip
+sudo apt install python3 -y
+sudo apt install python3-pip -y
 
 ```
 
