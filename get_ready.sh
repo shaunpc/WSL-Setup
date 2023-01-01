@@ -27,6 +27,12 @@ echo "echo" >> .profile
 let STEP++
 echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Checking VS Code install \n" $Color_Off
 code -v
+whereis code
+alias code="/mnt/c/Users/shaun/AppData/Local/Programs/'Microsoft VS Code'/bin/code"
+echo "echo" >> .profile
+echo "# Setup alias for VS-Code executable on WSL" >> .profile
+echo "export PATH=\$PATH:/mnt/c/Users/shaun/AppData/Local/'Microsoft VS Code'/bin/code" >> .profile
+echo "echo" >> .profile
 
 # Setup GIT
 let STEP++
