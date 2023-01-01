@@ -24,7 +24,7 @@ echo -e '\n' $BBlue $(date +"%T") $Green 'Step 3 >> Setting up GIT\n'  $Color_Of
 sudo apt install git -y
 git config --global user.name "Shaun Cotter"
 git config --global user.email "shauncotter00@gmail.com"
-sudo add-apt-repository ppa:git-core/ppa
+sudo add-apt-repository ppa:git-core/ppa -y
 sudo apt install git -y
 git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager-core.exe"
 # ALREADY DONE : git clone https://github.com/shaunpc/WSL-Setup.git
