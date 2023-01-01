@@ -1,9 +1,14 @@
-## From WIN11 Powershell
+## Starting from WIN11 Powershell
 ZAP any exist distribution AND the associated ROOT file structure, and reinstall fresh
 ```
-$ wsl --unregister Ubuntu
-$ wsl --install Ubuntu
+PS$ wsl --unregister Ubuntu
+PS$ wsl --install Ubuntu
 ```
+## And if you ever wanted to close WSL all down...
+```
+PS$ wsl --shutdown
+```
+---
 
 ## From new UBUNTU terminal
 As part of install enter a suitable username and password, then when presented with prompt, clone this WSL-Setup repo, and kick off the magic... 
@@ -13,37 +18,33 @@ $ source WSL-Setup/get_ready.sh
 ```
 This script attempts to automate as much of the following as possible!
 
+<span style="color:red">HEALTH WARNING : Probably assumes too much of the 'happy-path' in execution!</span>
+<br/><br/>
+
 # Setting up a development environment on a fresh WSL2 
-Basically going to follow these guidelines
-
-https://learn.microsoft.com/en-us/windows/wsl/setup/environment
-
-##
-## Update all components and cleanup
-```
-sudo apt update 
-sudo apt upgrade
-sudo apt autoremove
-```
-
-## Update to latest Distribution
-```
-apt-get dist-upgrade
-do-release-upgrade
-```
-
-## Add some niceities in own login script (.profile)
-```
-apt install screenfetch
-
-# Display pretty machine and login details
-echo
-screenfetch
-echo
-```
+Basically going to follow these Steps
+1. Ensure Operating System components are fully up-to-date (including major version upgrade checks)
+2. Add some login niceities into .profile
+3. Install and configure GIT (including GITHUB credentials)
+4. Install latest JAVA OpenJDK version
+5. Install latest Kafka version
+6. Install latest Python3/PIP3 versions
+7. Install latest MongoDB version
+8. Install latest SQLite version
 
 
-## Install VScode
+And generally following these guidelines:
+- https://learn.microsoft.com/en-us/windows/wsl/setup/environment
+- https://www.howtoforge.com/tutorial/ubuntu-apache-kafka-installation/
+
+---
+<br/><br/>
+<span style="color:cyan">ADDITIONAL NOTES</span>
+---
+<br/><br/>
+
+---
+## NOTE: VSCODE : Install VScode
 ```
 code .
 ```
@@ -51,67 +52,12 @@ code .
 |---|-----------|
 |CTRL-K V | View Markdown side-by-side|
 
+<br/><br/>
 
-## Set up GIT
-```
-apt-get git
-git config --global user.name "Shaun Cotter"
-git config --global user.email "shauncotter00@gmail.com"
-add-apt-repository ppa:git-core/ppa
-apt-get install git
-git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager-core.exe"
-```
+---
+## NOTE: MONGO : How to set upSet up MongoDB
 
-
-## Set up GITHUB
-```
-All done from VS-Code - innitialised repo, commmitted change and pushed to github new repo
-```
-
-## Set up JAVA
-```
-sudo apt install default-jdk
-java -version
-# Add JAVA_HOME variable with location of java
-update-alternatives --config java  
-sudo nano /etc/environment
-    JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/bin/java"
-source /etc/environment
-echo $JAVA_HOME
-```
-
-## Set up Kafka (need JAVA first)
-https://www.howtoforge.com/tutorial/ubuntu-apache-kafka-installation/
-
-```
-sudo useradd -r -d /opt/kafka -s /usr/sbin/nologin kafka
-sudo curl -fsSLo kafka.tgz https://dlcdn.apache.org/kafka/3.3.1/kafka_2.13-3.3.1.tgz
-tar -xzf kafka.tgz
-sudo mv kafka_2.13-3.3.1 /opt/kafka
-sudo chown -R kafka:kafka /opt/kafka
-
-
-# DEFAULT KAFKA LOG DIRECTORY IS
-# A comma separated list of directories under which to store log files
-log.dirs=/tmp/kafka-logs
-
-# ALTHOUGH CAN CHANGE IT WITH THIS
-sudo -u kafka mkdir -p /opt/kafka/logs
-sudo -u kafka nano /opt/kafka/config/server.properties
-    # logs configuration for Apache Kafka
-    log.dirs=/opt/kafka/logs
-
-```
-
-## Set up Python
-```
-sudo apt install python3 -y
-sudo apt install python3-pip -y
-
-```
-
-## Set up MongoDB
-https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-mongodb
+- https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-mongodb
 ```
 cd ~
 sudo apt update
@@ -150,25 +96,4 @@ test> show dbs
 test> exit
 
 sudo service mongod stop
-```
-
-## Set up SQLITE3
-https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-sqlite
-```
-cd ~
-sudo apt update
-sudo apt install sqlite3
-sqlite3 --version
-```
-My databases
-```
-mkdir ~/data/sqlite3
-sqlite ~/data/sqlite3 pingtrend.db
-.quit 
-```
-
-## Close it all down
-```
-Powershell
-    $ wsl --shutdown
 ```

@@ -27,7 +27,7 @@ git config --global user.email "shauncotter00@gmail.com"
 sudo add-apt-repository ppa:git-core/ppa -y
 sudo apt install git -y
 git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager-core.exe"
-# ALREADY DONE : git clone https://github.com/shaunpc/WSL-Setup.git
+# ASSUME ALREADY DONE : git clone https://github.com/shaunpc/WSL-Setup.git
 
 # Setup JAVA (a bit clunky to be able to get/set JAVA_HOME)
 echo -e '\n' $BBlue $(date +"%T") $Green 'Step 4 >> Setting up JAVA\n' $Color_Off
@@ -44,7 +44,16 @@ sudo curl -fsSLo kafka.tgz https://dlcdn.apache.org/kafka/3.3.1/kafka_2.13-3.3.1
 tar -xzf kafka.tgz
 sudo mv kafka_2.13-3.3.1 /opt/kafka
 sudo chown -R kafka:kafka /opt/kafka
-echo -e $Red ' >> INFO << Leaving /opt/kafka/config/server.properties with default log file directory' $Color_Off '(log.dirs=/tmp/kafka-logs)'
+echo "KAFKA_HOME=\"/opt/kafka\"" | sudo tee -a /etc/environment
+source /etc/environment
+# Change the default KAFKA log directory
+sudo -u kafka mkdir -p /opt/kafka/logs
+sudo -u kafka cp -v $KAFKA_HOME/config/server.properties $KAFKA_HOME/config/server.properties_orig
+awk '{sub("log.dirs=/tmp/kafka-logs","log.dirs=/opt/kafka/logs")}1' $KAFKA_HOME/config/server.properties_orig > TEMP_KAFKA_server.properties_new
+sudo cp -v TEMP_KAFKA_server.properties_new $KAFKA_HOME/config/server.properties
+rm -v TEMP_KAFKA_server.properties_new 
+# echo -e $Red ' >> INFO << Leaving /opt/kafka/config/server.properties with default log file directory' $Color_Off '(log.dirs=/tmp/kafka-logs)'
+rm -vf kafka.tgz
 
 # Setup PYTHON 
 echo -e '\n' $BBlue $(date +"%T") $Green 'Step 6 >> Setting up PYTHON\n' $Color_Off
@@ -59,8 +68,19 @@ echo -e $Red ' ###    NOT DONE YET    ### \n' $Color_Off
 # Setup SQLite3
 echo -e '\n' $BBlue $(date +"%T") $Green 'Step 8 >> Setting up SQLite\n' $Color_Off
 sudo apt install sqlite3 -y
+mkdir -v -p ~/data/sqlite3
 sqlite3 --version
 
+
+# Let's summarite the VERSIONS
+echo -e '\n' $BBlue $(date +"%T") $Green 'Summarising Installed Versions'  $Color_Off
+echo -e $Cyan '\tUBUNTU\t: ' $Green $(source /etc/lsb-release && echo $DISTRIB_DESCRIPTION | cut -d' ' -f2) $Color_off
+echo -e $Cyan '\tGIT\t: ' $Green $(git --version | cut -d' ' -f3) $Color_off
+echo -e $Cyan '\tJAVA\t: ' $Green $(javac -version | cut -d' ' -f2) $Color_off
+echo -e $Cyan '\tKAFKA\t: ' $Green $(/opt/kafka/bin/kafka-topics.sh --version | cut -d' ' -f1) $Color_off
+echo -e $Cyan '\tPYTHON\t: ' $Green $(python3 --version | cut -d' ' -f2) $Color_off
+echo -e $Cyan '\tMONGODB\t: ' $Green $() $Color_off
+echo -e $Cyan '\tSQLITE\t: ' $Green $(sqlite3 --version | cut -d' ' -f1) $Color_off
 
 # And we're done!
 echo -e '\n' $BBlue $(date +"%T") $Green 'COMPLETED Setup Script\n'  $Color_Off
