@@ -46,13 +46,16 @@ And generally following these guidelines:
 <br/><br/>
 
 ---
-## NOTE: VSCODE : Install VScode
-```
-code .
-```
+## NOTE: VSCODE : Shortcuts
 |Key|Description|
 |---|-----------|
 |CTRL-K V | View Markdown side-by-side|
+
+<br/><br/>
+
+---
+## NOTE: KAFKA - Testing KAFKA setup 
+https://michaeljohnpena.com/blog/kafka-wsl2/
 
 <br/><br/>
 

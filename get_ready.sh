@@ -23,11 +23,13 @@ echo "echo" >> .profile
 echo "screenfetch" >> .profile
 echo "echo" >> .profile
 
-# Ensure VS Code installs itself (if left to end, the 'code' command not recognised)
+# Ensure VS Code installs itself 
 let STEP++
 echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Checking VS Code install \n" $Color_Off
 code -v
 whereis code
+# This bit is a fudge - if left to without, the 'code' command is not recognised
+# I *think* that symbolica links are the answer... but... 
 alias code="/mnt/c/Users/shaun/AppData/Local/Programs/'Microsoft VS Code'/bin/code"
 echo "echo" >> .profile
 echo "# Setup alias for VS-Code executable on WSL" >> .profile
@@ -57,7 +59,8 @@ source /etc/environment
 # Setup KAFKA (requires JAVA setup first)
 let STEP++
 echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up KAFKA\n" $Color_Off
-sudo useradd -r -d /opt/kafka -s /usr/sbin/nologin kafka
+# sudo useradd -r -d /opt/kafka -s /usr/sbin/nologin kafka
+sudo useradd -r -d /opt/kafka kafka
 sudo curl -fsSLo kafka.tgz https://dlcdn.apache.org/kafka/3.3.1/kafka_2.13-3.3.1.tgz
 tar -xzf kafka.tgz
 sudo mv kafka_2.13-3.3.1 /opt/kafka
