@@ -25,12 +25,14 @@ This script attempts to automate as much of the following as possible!
 Basically going to follow these Steps
 1. Ensure Operating System components are fully up-to-date (including major version upgrade checks)
 2. Add some login niceities into .profile
-3. Install and configure GIT (including GITHUB credentials)
-4. Install latest JAVA OpenJDK version
-5. Install latest Kafka version
-6. Install latest Python3/PIP3 versions
-7. Install latest MongoDB version
-8. Install latest SQLite version
+3. Install VS Code editor
+4. Install and configure GIT (including GITHUB credentials)
+5. Install latest JAVA OpenJDK version
+6. Install latest Kafka version
+7. Install latest Python3/PIP3 versions
+8. Install latest MongoDB version
+9. Install latest SQLite version
+10. Finally summarise the installed versions... 
 
 
 And generally following these guidelines:
