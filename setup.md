@@ -4,7 +4,7 @@ ZAP any exist distribution AND the associated ROOT file structure, and reinstall
 PS$ wsl --unregister Ubuntu
 PS$ wsl --install Ubuntu
 ```
-## And if you ever wanted to close WSL all down...
+And if you ever wanted to close WSL all down...
 ```
 PS$ wsl --shutdown
 ```
