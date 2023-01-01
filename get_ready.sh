@@ -51,7 +51,15 @@ echo -e '\n' $BBlue $(date +"%T") $Green 'Step 6 >> Setting up PYTHON\n'
 sudo apt install python3 -y
 sudo apt install python3-pip -y
 
+# Setup MongoDB
+echo -e '\n' $BBlue $(date +"%T") $Green 'Step 7 >> Setting up MONGO DB\n'
+echo -e $Red ' ###    NOT DONE YET    ### \n'
 
+
+# Setup SQLite3
+echo -e '\n' $BBlue $(date +"%T") $Green 'Step 8 >> Setting up SQLite\n'
+sudo apt install sqlite3
+sqlite3 --version
 
 
 # And we're done!
