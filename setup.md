@@ -6,11 +6,10 @@ $ wsl --install Ubuntu
 ```
 
 ## From new UBUNTU terminal
-As part of install enter a suitable username and password, then when presented with prompt, grab this WSL-Setup script, ensure it has execute permission, and run it
+As part of install enter a suitable username and password, then when presented with prompt, clone this WSL-Setup repo, and kick off the magic... 
 ```
-$ curl https://raw.githubusercontent.com/shaunpc/WSL-Setup/master/get_ready.sh -O
-$ chmod +x get_ready.sh
-$ ~/get_ready.sh
+$ git clone https://github.com/shaunpc/WSL-Setup.git
+$ source WSL-Setup/get_ready.sh
 ```
 This script attempts to automate as much of the following as possible!
 
