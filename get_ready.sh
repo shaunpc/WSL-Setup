@@ -1,12 +1,12 @@
 # set some color variables for highlighting progress
 time_start=`date +%s`
 source ~/WSL-Setup/colors.sh
-echo -e '\n' $BBlue $(date +"%D") $Green 'STARTING Setup Script\n' $Color_Off
+echo -e '\n' $BBlue $(date +"%D") $Green "STARTING Setup Script\n" $Color_Off
 STEP=0
 
 # Core Operating System Updates
 let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green 'Step $STEP >> Performing Ubuntu updates\n' $Color_Off
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Performing Ubuntu updates\n" $Color_Off
 sudo apt update
 sudo apt upgrade -y
 sudo apt autoremove
@@ -15,7 +15,7 @@ do-release-upgrade
 
 # Simple login script changes
 let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green 'Step $STEP >> Updating .profile \n' $Color_Off
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Updating .profile \n" $Color_Off
 sudo apt install screenfetch -y
 echo "" >> .profile
 echo "# Display pretty machine and login details" >> .profile
@@ -25,12 +25,15 @@ echo "echo" >> .profile
 
 # Ensure VS Code installs itself (if left to end, the 'code' command not recognised)
 let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green 'Step $STEP >> Checking VS Code install \n' $Color_Off
-code -v
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Checking VS Code install \n" $Color_Off
+sudo apt install software-properties-common apt-transport-https wget
+wget -q https://packages.microsoft.com/keys/microsoft.asc -O- | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+sudo apt install code
 
 # Setup GIT
 let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green 'Step $STEP >> Setting up GIT\n'  $Color_Off
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up GIT\n"  $Color_Off
 sudo apt install git -y
 git config --global user.name "Shaun Cotter"
 git config --global user.email "shauncotter00@gmail.com"
@@ -41,7 +44,7 @@ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git
 
 # Setup JAVA (a bit clunky to be able to get/set JAVA_HOME)
 let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green 'Step $STEP >> Setting up JAVA\n' $Color_Off
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up JAVA\n" $Color_Off
 sudo apt install default-jdk -y
 java -version
 JAVA_LOC="$(update-alternatives --config java | cut -d':' -f2 -s | cut -c2- | cut -d' ' -f1 )"
@@ -50,7 +53,7 @@ source /etc/environment
 
 # Setup KAFKA (requires JAVA setup first)
 let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green 'Step $STEP >> Setting up KAFKA\n' $Color_Off
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up KAFKA\n" $Color_Off
 sudo useradd -r -d /opt/kafka -s /usr/sbin/nologin kafka
 sudo curl -fsSLo kafka.tgz https://dlcdn.apache.org/kafka/3.3.1/kafka_2.13-3.3.1.tgz
 tar -xzf kafka.tgz
@@ -69,26 +72,26 @@ rm -vf kafka.tgz
 
 # Setup PYTHON 
 let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green 'Step $STEP >> Setting up PYTHON\n' $Color_Off
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up PYTHON\n" $Color_Off
 sudo apt install python3 -y
 sudo apt install python3-pip -y
 
 # Setup MongoDB
 let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green 'Step $STEP >> Setting up MONGO DB\n' $Color_Off
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up MONGO DB\n" $Color_Off
 echo -e $Red ' ###    NOT DONE YET    ### \n' $Color_Off
 
 
 # Setup SQLite3
 let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green 'Step $STEP >> Setting up SQLite\n' $Color_Off
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up SQLite\n" $Color_Off
 sudo apt install sqlite3 -y
 mkdir -v -p ~/data/sqlite3
 sqlite3 --version
 
 # Let's summarite the VERSIONS
 let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green 'Step $STEP >> Summarising Installed Versions'  $Color_Off
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Summarising Installed Versions"  $Color_Off
 echo -e $Cyan '\tUBUNTU\t: ' $Green $(source /etc/lsb-release && echo $DISTRIB_DESCRIPTION | cut -d' ' -f2) $Color_off
 echo -e $Cyan '\tVS-Code\t: ' $Green $(code -v | head -n 1) $Color_off
 echo -e $Cyan '\tGIT\t: ' $Green $(git --version | cut -d' ' -f3) $Color_off
@@ -100,4 +103,4 @@ echo -e $Cyan '\tSQLITE\t: ' $Green $(sqlite3 --version | cut -d' ' -f1) $Color_
 
 # And we're done!
 time_end=`date +%s`
-echo -e '\n' $BBlue $(date +"%T") $Green 'COMPLETED Setup Script (`expr $time_end - $time_start` seconds to execute)\n'  $Color_Off
+echo -e '\n' $BBlue $(date +"%T") $Green "COMPLETED Setup Script (`expr $time_end - $time_start` seconds to execute)\n"  $Color_Off
