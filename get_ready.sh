@@ -27,7 +27,7 @@ git config --global user.email "shauncotter00@gmail.com"
 sudo add-apt-repository ppa:git-core/ppa
 sudo apt install git -y
 git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager-core.exe"
-git clone https://github.com/shaunpc/WSL-Setup.git
+# ALREADY DONE : git clone https://github.com/shaunpc/WSL-Setup.git
 
 # Setup JAVA (a bit clunky to be able to get/set JAVA_HOME)
 echo -e '\n' $BBlue $(date +"%T") $Green 'Step 4 >> Setting up JAVA\n' $Color_Off
