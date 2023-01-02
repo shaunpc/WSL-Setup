@@ -38,6 +38,9 @@ Basically going to follow these Steps
 And generally following these guidelines:
 - https://learn.microsoft.com/en-us/windows/wsl/setup/environment
 - https://www.howtoforge.com/tutorial/ubuntu-apache-kafka-installation/
+- https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-mongodb
+- https://www.mongodb.com/community/forums/t/how-to-install-mongodb-6-0-on-ubuntu-22-04/176976/9)
+
 
 ---
 <br/><br/>
@@ -95,39 +98,13 @@ _Sidenote_: This link explains the latest Docker Kafka image: https://hub.docker
 ---
 ## NOTE: MONGO : How to set upSet up MongoDB
 
-- https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-mongodb
-```shell
-$ cd ~
-$ sudo apt update
-$ wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-$ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-$ sudo apt-get update
-$ sudo apt-get install -y mongodb-org
-$ mongod --version
-```
-
-To overcome the apt-key deprecated message: (https://www.mongodb.com/community/forums/t/how-to-install-mongodb-6-0-on-ubuntu-22-04/176976/9)
-```shell
-$ sudo apt update
-$ wget -qO - https://pgp.mongodb.com/server-6.0.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-org-6.0.gpg
-$ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-$ sudo apt update
-$ sudo apt install -y mongodb-org
-$ mongod --version
-
-
-# Optional (you can find the email address / ID using `apt-key list`)
-sudo apt-key del support@example.com
-
-
-```
 If it complains about the open files limit
 ```shell
 # ulimit -a
 # ulimit n=40000
 ```
 
-Create default database location at top level
+Create default database location at top level - still not clear ...  so also created ~/data/mongodb   
 ```shell
 $ mkdir -p /data/db
 $ mongod    # starts the server visible in the terminal

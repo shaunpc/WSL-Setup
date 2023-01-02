@@ -82,6 +82,10 @@ wget -qO - https://pgp.mongodb.com/server-6.0.asc | sudo gpg --dearmor -o /etc/a
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
 sudo apt update
 sudo apt install -y mongodb-org
+sudo wget -O /etc/init.d/mongod https://raw.githubusercontent.com/mongodb/mongo/master/debian/init.d
+sudo chmod +x /etc/init.d/mongod
+# TODO - STILL NOT QUITE FINISHED!
+mkdir -v -p ~/data/mongodb
 mongod --version
 
 # Setup SQLite3
