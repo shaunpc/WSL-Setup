@@ -1,18 +1,18 @@
 ## Starting from WIN11 Powershell
 ZAP any exist distribution AND the associated ROOT file structure, and reinstall fresh
-```
-PS$ wsl --unregister Ubuntu
-PS$ wsl --install Ubuntu
+```shell
+$ wsl --unregister Ubuntu
+$ wsl --install Ubuntu
 ```
 And if you ever wanted to close WSL all down...
-```
-PS$ wsl --shutdown
+```shell
+$ wsl --shutdown
 ```
 ---
 
 ## From new UBUNTU terminal
 As part of install enter a suitable username and password, then when presented with prompt, clone this WSL-Setup repo, and kick off the magic... 
-```
+```shell
 $ git clone https://github.com/shaunpc/WSL-Setup.git
 $ source WSL-Setup/get_ready.sh
 ```
@@ -57,48 +57,66 @@ And generally following these guidelines:
 ## NOTE: KAFKA - Testing KAFKA setup 
 https://michaeljohnpena.com/blog/kafka-wsl2/
 
-<br/><br/>
+To enable testing interactively, first needed to enable the user for interactive mode, by removing the restricted shell set up (```-s /usr/sbin/nologin```) option in the original ```useradd``` setup script command
+Secondly, set it up with an appropriate password with `$ sudo passwd kafka`
+
+```shell
+Create FOUR sessions, and run following commands in respective sessions: 
+1. su kafka $KAFKA_HOME/bin/zookeeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties
+2. su kafka $KAFKA_HOME/bin/kafka-server-start.sh $KAFKA_HOME/config/server.properties
+3. su kafka -c "$KAFKA_HOME/bin/kafka-console-producer.sh --topic sample-topic --broker-list localhost:9092"
+4. su kafka -c "$KAFKA_HOME/bin/kafka-console-consumer.sh --topic sample-topic --from-beginning --bootstrap-server localhost:9092"
+```
+
+Then enter the text of the messages in the Producer session (#3) and watch them appear on the Consumer Session (#4) - cool!
+
+Next, installed Docker for Windows, as per: https://docs.docker.com/desktop/install/windows-install/
+
+<span style="color:red">TODO: get kafka runnig in docker linux containers.. </span>
+
+<br/>
+<br/>
 
 ---
 ## NOTE: MONGO : How to set upSet up MongoDB
 
 - https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database#install-mongodb
-```
-cd ~
-sudo apt update
-wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
-sudo apt-get update
-sudo apt-get install -y mongodb-org
-mongod --version
+```shell
+$ cd ~
+$ sudo apt update
+$ wget -qO - https://www.mongodb.org/static/pgp/server-6.0.asc | sudo apt-key add -
+$ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+$ sudo apt-get update
+$ sudo apt-get install -y mongodb-org
+$ mongod --version
 ```
 If it complains about the open files limit
-```
+```shell
 # ulimit -a
 # ulimit n=40000
 ```
 
 Create default database location at top level
-```
-mkdir -p /data/db
-mongod    # starts the server visible in the terminal
+```shell
+$ mkdir -p /data/db
+$ mongod    # starts the server visible in the terminal
 [CTRL_X]
 ```
 Enable as service for easy start/stop
-```
-sudo nano /etc/init.d/mongod 
+```shell 
+$ sudo nano /etc/init.d/mongod 
 PASTE : https://raw.githubusercontent.com/mongodb/mongo/master/debian/init.d
-chmod +x /etc/init.d/mongod
-chown mongodb:mongodb /var/run/mongod.pid
+$ chmod +x /etc/init.d/mongod
+$ chown mongodb:mongodb /var/run/mongod.pid
 ```
 Start backend server, test it out, then shut it down
-```
-sudo service mongod start
-more /var/log/mongodb/mongod.log 
+```shell
+$ sudo service mongod start
+$ more /var/log/mongodb/mongod.log 
 
-mongosh
+$ mongosh
 test> show dbs
 test> exit
 
-sudo service mongod stop
+$ sudo service mongod stop
 ```

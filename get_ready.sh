@@ -28,13 +28,6 @@ let STEP++
 echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Checking VS Code install \n" $Color_Off
 code -v
 whereis code
-# Key thing here is not to override the PATH variable - with source /etc/environment - otherwise 'code' command is not recognised
-# I *think* that symbolica links are the answer... but... 
-# alias code="/mnt/c/Users/shaun/AppData/Local/Programs/'Microsoft VS Code'/bin/code"
-# echo "echo" >> .profile
-# echo "# Setup alias for VS-Code executable on WSL" >> .profile
-# echo "export PATH=\$PATH:/mnt/c/Users/shaun/AppData/Local/'Microsoft VS Code'/bin/code" >> .profile
-# echo "echo" >> .profile
 
 # Setup GIT
 let STEP++
@@ -45,7 +38,6 @@ git config --global user.email "shauncotter00@gmail.com"
 sudo add-apt-repository ppa:git-core/ppa -y
 sudo apt install git -y
 git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager-core.exe"
-# ASSUME ALREADY DONE : git clone https://github.com/shaunpc/WSL-Setup.git
 
 # Setup JAVA (a bit clunky to be able to get/set JAVA_HOME)
 let STEP++
