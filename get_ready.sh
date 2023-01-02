@@ -53,8 +53,8 @@ echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up JAVA\n" $Colo
 sudo apt install default-jdk -y
 java -version
 JAVA_LOC="$(update-alternatives --config java | cut -d':' -f2 -s | cut -c2- | cut -d' ' -f1 )"
-echo "JAVA_HOME=\"$JAVA_LOC\"" | sudo tee -a /etc/environment
-source /etc/environment
+echo "export JAVA_HOME=\"$JAVA_LOC\"" | sudo tee -a /etc/profile
+export JAVA_HOME="$JAVA_LOC"
 
 # Setup KAFKA (requires JAVA setup first)
 let STEP++
@@ -65,15 +65,16 @@ sudo curl -fsSLo kafka.tgz https://dlcdn.apache.org/kafka/3.3.1/kafka_2.13-3.3.1
 tar -xzf kafka.tgz
 sudo mv kafka_2.13-3.3.1 /opt/kafka
 sudo chown -R kafka:kafka /opt/kafka
-echo "KAFKA_HOME=\"/opt/kafka\"" | sudo tee -a /etc/environment
-source /etc/environment
+echo "export KAFKA_HOME=\"/opt/kafka\"" | sudo tee -a /etc/profile
+export KAFKA_HOME="/opt/kafka"
 # Change the default KAFKA log directory
 sudo -u kafka mkdir -p /opt/kafka/logs
 sudo -u kafka cp -v $KAFKA_HOME/config/server.properties $KAFKA_HOME/config/server.properties_orig
 awk '{sub("log.dirs=/tmp/kafka-logs","log.dirs=/opt/kafka/logs")}1' $KAFKA_HOME/config/server.properties_orig > TEMP_KAFKA_server.properties_new
 sudo cp -v TEMP_KAFKA_server.properties_new $KAFKA_HOME/config/server.properties
 rm -v TEMP_KAFKA_server.properties_new 
-# echo -e $Red ' >> INFO << Leaving /opt/kafka/config/server.properties with default log file directory' $Color_Off '(log.dirs=/tmp/kafka-logs)'
+echo "export KAFKA_LOGS=\"/opt/kafka/logs\"" | sudo tee -a /etc/profile
+export KAFKA_HOME="/opt/kafka/logs"
 rm -vf kafka.tgz
 
 # Setup PYTHON 
