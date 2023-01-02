@@ -72,7 +72,22 @@ Then enter the text of the messages in the Producer session (#3) and watch them 
 
 Next, installed Docker for Windows, as per: https://docs.docker.com/desktop/install/windows-install/
 
-<span style="color:red">TODO: get kafka runnig in docker linux containers.. </span>
+Then start the two necesary containers (from Ubuntu; but these become visible in Docker for Windows as running  containers):
+```shell
+$ docker run -d -p 2181:2181 ubuntu/zookeeper:edge
+$ docker run -d --name kafka-container -e TZ=UTC -p 9092:9092 -e ZOOKEEPER_HOST=host.docker.internal ubuntu/kafka:3.1-22.04_beta
+```
+Then, in one console, connect as Producer....
+```
+$ docker exec -it kafka-container /bin/bash
+root@e3108937e0aa:/# kafka-console-producer.sh --topic sample-topic --broker-list localhost:9092
+```
+Then, in a second console, connect as Consumer....
+```
+$ docker exec -it kafka-container /bin/bash
+kafka-console-consumer.sh --topic sample-topic --from-beginning --bootstrap-server localhost:9092
+```
+_Sidenote_: This link explains the latest Docker Kafka image: https://hub.docker.com/r/ubuntu/kafka
 
 <br/>
 <br/>
@@ -89,6 +104,22 @@ $ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongo
 $ sudo apt-get update
 $ sudo apt-get install -y mongodb-org
 $ mongod --version
+```
+
+To overcome the apt-key deprecated message: (https://www.mongodb.com/community/forums/t/how-to-install-mongodb-6-0-on-ubuntu-22-04/176976/9)
+```shell
+$ sudo apt update
+$ wget -qO - https://pgp.mongodb.com/server-6.0.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-org-6.0.gpg
+$ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+$ sudo apt update
+$ sudo apt install -y mongodb-org
+$ mongod --version
+
+
+# Optional (you can find the email address / ID using `apt-key list`)
+sudo apt-key del support@example.com
+
+
 ```
 If it complains about the open files limit
 ```shell

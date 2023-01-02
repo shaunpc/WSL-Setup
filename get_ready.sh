@@ -78,8 +78,11 @@ sudo apt install python3-pip -y
 # Setup MongoDB
 let STEP++
 echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up MONGO DB\n" $Color_Off
-echo -e $Red ' ###    NOT DONE YET    ### \n' $Color_Off
-
+wget -qO - https://pgp.mongodb.com/server-6.0.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-org-6.0.gpg
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+sudo apt update
+sudo apt install -y mongodb-org
+mongod --version
 
 # Setup SQLite3
 let STEP++
@@ -97,7 +100,7 @@ echo -e $Cyan '\tGIT\t: ' $Green $(git --version | cut -d' ' -f3) $Color_off
 echo -e $Cyan '\tJAVA\t: ' $Green $(javac -version | cut -d' ' -f2) $Color_off
 echo -e $Cyan '\tKAFKA\t: ' $Green $(/opt/kafka/bin/kafka-topics.sh --version | cut -d' ' -f1) $Color_off
 echo -e $Cyan '\tPYTHON\t: ' $Green $(python3 --version | cut -d' ' -f2) $Color_off
-echo -e $Cyan '\tMONGODB\t: ' $Green $() $Color_off
+echo -e $Cyan '\tMONGODB\t: ' $Green $(mongod --version | head -n 1 | cut -d' ' -f3) $Color_off
 echo -e $Cyan '\tSQLITE\t: ' $Green $(sqlite3 --version | cut -d' ' -f1) $Color_off
 
 # And we're done!
