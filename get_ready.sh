@@ -28,13 +28,13 @@ let STEP++
 echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Checking VS Code install \n" $Color_Off
 code -v
 whereis code
-# This bit is a fudge - if left to without, the 'code' command is not recognised
+# Key thing here is not to override the PATH variable - with source /etc/environment - otherwise 'code' command is not recognised
 # I *think* that symbolica links are the answer... but... 
-alias code="/mnt/c/Users/shaun/AppData/Local/Programs/'Microsoft VS Code'/bin/code"
-echo "echo" >> .profile
-echo "# Setup alias for VS-Code executable on WSL" >> .profile
-echo "export PATH=\$PATH:/mnt/c/Users/shaun/AppData/Local/'Microsoft VS Code'/bin/code" >> .profile
-echo "echo" >> .profile
+# alias code="/mnt/c/Users/shaun/AppData/Local/Programs/'Microsoft VS Code'/bin/code"
+# echo "echo" >> .profile
+# echo "# Setup alias for VS-Code executable on WSL" >> .profile
+# echo "export PATH=\$PATH:/mnt/c/Users/shaun/AppData/Local/'Microsoft VS Code'/bin/code" >> .profile
+# echo "echo" >> .profile
 
 # Setup GIT
 let STEP++
@@ -52,7 +52,7 @@ let STEP++
 echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up JAVA\n" $Color_Off
 sudo apt install default-jdk -y
 java -version
-JAVA_LOC="$(update-alternatives --config java | cut -d':' -f2 -s | cut -c2- | cut -d' ' -f1 )"
+JAVA_LOC="$(update-alternatives --config java | cut -d':' -f2 -s | cut -c2- | cut -d' ' -f1 | cut -d"/" -f1-5)"
 echo "export JAVA_HOME=\"$JAVA_LOC\"" | sudo tee -a /etc/profile
 export JAVA_HOME="$JAVA_LOC"
 
@@ -74,7 +74,7 @@ awk '{sub("log.dirs=/tmp/kafka-logs","log.dirs=/opt/kafka/logs")}1' $KAFKA_HOME/
 sudo cp -v TEMP_KAFKA_server.properties_new $KAFKA_HOME/config/server.properties
 rm -v TEMP_KAFKA_server.properties_new 
 echo "export KAFKA_LOGS=\"/opt/kafka/logs\"" | sudo tee -a /etc/profile
-export KAFKA_HOME="/opt/kafka/logs"
+export KAFKA_LOGS="/opt/kafka/logs"
 rm -vf kafka.tgz
 
 # Setup PYTHON 
