@@ -85,6 +85,10 @@ sudo apt install -y mongodb-org
 sudo wget -O /etc/init.d/mongod https://raw.githubusercontent.com/mongodb/mongo/master/debian/init.d
 sudo chmod +x /etc/init.d/mongod
 # TODO - STILL NOT QUITE FINISHED!
+sudo touch /var/run/mongod.pid
+sudo chown mongodb:mongodb /var/run/mongod.pid
+sudo mkdir -v -p /data/db
+sudo chown mongodb:mongodb /data/db
 mkdir -v -p ~/data/mongodb
 mongod --version
 
