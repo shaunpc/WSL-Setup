@@ -65,6 +65,7 @@ sudo useradd -r -d /opt/kafka kafka
 python3 WSL-Setup/get_latest_kafka.py
 source kafka-version.sh
 rm kafka-version.sh
+echo -e $Blue '\tInstalling from: ' $KAFKA_VSN_FULL $Color_Off
 sudo curl -fsSLo kafka.tgz $KAFKA_VSN_FULL
 tar -xzf kafka.tgz
 sudo mv $KAFKA_VSN_SHORT /opt/kafka
@@ -113,15 +114,15 @@ git clone https://github.com/shaunpc/WSL-PingTrends.git
 
 # Let's summarite the VERSIONS
 let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Summarising Installed Versions"  $Color_Off
-echo -e $Cyan '\tUBUNTU\t: ' $Green $(source /etc/lsb-release && echo $DISTRIB_DESCRIPTION | cut -d' ' -f2) $Color_off
-echo -e $Cyan '\tVS-Code\t: ' $Green $(code -v | head -n 1) $Color_off
-echo -e $Cyan '\tGIT\t: ' $Green $(git --version | cut -d' ' -f3) $Color_off
-echo -e $Cyan '\tJAVA\t: ' $Green $(javac -version | cut -d' ' -f2) $Color_off
-echo -e $Cyan '\tKAFKA\t: ' $Green $(/opt/kafka/bin/kafka-topics.sh --version | cut -d' ' -f1) $Color_off
-echo -e $Cyan '\tPYTHON\t: ' $Green $(python3 --version | cut -d' ' -f2) $Color_off
-echo -e $Cyan '\tMONGODB\t: ' $Green $(mongod --version | head -n 1 | cut -d' ' -f3) $Color_off
-echo -e $Cyan '\tSQLITE\t: ' $Green $(sqlite3 --version | cut -d' ' -f1) $Color_off
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Summarising Installed Versions\n"  $Color_Off
+echo -e $Cyan '\tUBUNTU\t: ' $Green $(source /etc/lsb-release && echo $DISTRIB_DESCRIPTION | cut -d' ' -f2) $Color_Off
+echo -e $Cyan '\tVS-Code\t: ' $Green $(code -v | head -n 1) $Color_Off
+echo -e $Cyan '\tGIT\t: ' $Green $(git --version | cut -d' ' -f3) $Color_Off
+echo -e $Cyan '\tJAVA\t: ' $Green $(javac -version | cut -d' ' -f2) $Color_Off
+echo -e $Cyan '\tKAFKA\t: ' $Green $(/opt/kafka/bin/kafka-topics.sh --version | cut -d' ' -f1) $Color_Off
+echo -e $Cyan '\tPYTHON\t: ' $Green $(python3 --version | cut -d' ' -f2) $Color_Off
+echo -e $Cyan '\tMONGODB\t: ' $Green $(mongod --version | head -n 1 | cut -d' ' -f3) $Color_Off
+echo -e $Cyan '\tSQLITE\t: ' $Green $(sqlite3 --version | cut -d' ' -f1) $Color_Off
 
 # And we're done!
 time_end=`date +%s`

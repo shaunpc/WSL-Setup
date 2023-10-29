@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
+print("Determining latest KAFKA version for download...")
 
 # First for the version directory
 url = "https://downloads.apache.org/kafka"
