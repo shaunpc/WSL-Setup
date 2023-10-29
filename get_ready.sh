@@ -22,6 +22,7 @@ echo "# Display pretty machine and login details" >> .profile
 echo "echo" >> .profile
 echo "screenfetch" >> .profile
 echo "echo" >> .profile
+echo "source ./WSL-Setup/colors.sh" >> .profile
 
 # Ensure VS Code installs itself 
 let STEP++
