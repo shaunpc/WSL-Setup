@@ -62,8 +62,9 @@ echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up KAFKA\n" $Col
 # sudo useradd -r -d /opt/kafka -s /usr/sbin/nologin kafka
 sudo useradd -r -d /opt/kafka kafka
 # Call python routine to determine latest KAFKA version download file and store in file as variables
-python3 get_latest_kafka.py
+python3 WSL-Setup/get_latest_kafka.py
 source kafka-version.sh
+rm kafka-version.sh
 sudo curl -fsSLo kafka.tgz $KAFKA_VSN_FULL
 tar -xzf kafka.tgz
 sudo mv $KAFKA_VSN_SHORT /opt/kafka
