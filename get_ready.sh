@@ -48,14 +48,25 @@ JAVA_LOC="$(update-alternatives --config java | cut -d':' -f2 -s | cut -c2- | cu
 echo "export JAVA_HOME=\"$JAVA_LOC\"" | sudo tee -a /etc/profile
 export JAVA_HOME="$JAVA_LOC"
 
+# Setup PYTHON 
+let STEP++
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up PYTHON\n" $Color_Off
+sudo apt install python3 -y
+sudo apt install python3-pip -y
+pip install requests
+pip install beautifulsoup4
+
 # Setup KAFKA (requires JAVA setup first)
 let STEP++
 echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up KAFKA\n" $Color_Off
 # sudo useradd -r -d /opt/kafka -s /usr/sbin/nologin kafka
 sudo useradd -r -d /opt/kafka kafka
-sudo curl -fsSLo kafka.tgz https://dlcdn.apache.org/kafka/3.3.1/kafka_2.13-3.3.1.tgz
+# Call python routine to determine latest KAFKA version download file and store in file as variables
+python3 get_latest_kafka.py
+source kafka-version.sh
+sudo curl -fsSLo kafka.tgz $KAFKA_VSN_FULL
 tar -xzf kafka.tgz
-sudo mv kafka_2.13-3.3.1 /opt/kafka
+sudo mv $KAFKA_VSN_SHORT /opt/kafka
 sudo chown -R kafka:kafka /opt/kafka
 echo "export KAFKA_HOME=\"/opt/kafka\"" | sudo tee -a /etc/profile
 export KAFKA_HOME="/opt/kafka"
@@ -68,12 +79,6 @@ rm -v TEMP_KAFKA_server.properties_new
 echo "export KAFKA_LOGS=\"/opt/kafka/logs\"" | sudo tee -a /etc/profile
 export KAFKA_LOGS="/opt/kafka/logs"
 rm -vf kafka.tgz
-
-# Setup PYTHON 
-let STEP++
-echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up PYTHON\n" $Color_Off
-sudo apt install python3 -y
-sudo apt install python3-pip -y
 
 # Setup MongoDB
 let STEP++
@@ -98,6 +103,12 @@ echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up SQLite\n" $Co
 sudo apt install sqlite3 -y
 mkdir -v -p ~/data/sqlite3
 sqlite3 --version
+
+# Clone the PingTrends Repo
+let STEP++
+echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Clone PingTrends repo\n" $Color_Off
+git clone https://github.com/shaunpc/WSL-PingTrends.git
+
 
 # Let's summarite the VERSIONS
 let STEP++

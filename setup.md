@@ -31,11 +31,12 @@ Basically going to follow these Steps
 3. Install VS Code editor
 4. Install and configure GIT (including GITHUB credentials)
 5. Install latest JAVA OpenJDK version
-6. Install latest Kafka version
-7. Install latest Python3/PIP3 versions
+6. Install latest Python3/PIP3 versions
+7. Install latest Kafka version (determined on the fly!)
 8. Install latest MongoDB version
 9. Install latest SQLite version
-10. Finally summarise the installed versions... 
+10. Clones the PingTrends repo
+11. Finally summarise the installed versions... 
 
 
 And generally following these guidelines:
