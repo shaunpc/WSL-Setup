@@ -61,11 +61,13 @@ pip install beautifulsoup4
 let STEP++
 echo -e '\n' $BBlue $(date +"%T") $Green "Step $STEP >> Setting up KAFKA\n" $Color_Off
 # sudo useradd -r -d /opt/kafka -s /usr/sbin/nologin kafka
+echo "Creating KAFKA user account, please set password"
 sudo useradd -r -d /opt/kafka kafka
+sudo passwd kafka
 # Call python routine to determine latest KAFKA version download file and store in file as variables
 python3 WSL-Setup/get_latest_kafka.py
 source kafka-version.sh
-rm kafka-version.sh
+rm -vf kafka-version.sh
 echo -e $Blue '\tInstalling from: ' $KAFKA_VSN_FULL $Color_Off
 sudo curl -fsSLo kafka.tgz $KAFKA_VSN_FULL
 tar -xzf kafka.tgz
