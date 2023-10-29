@@ -1,8 +1,11 @@
 ## Starting from WIN11 Powershell
-ZAP any exist distribution AND the associated ROOT file structure, and reinstall fresh
+ZAP any exist distribution AND the associated ROOT file structure, and reinstall fresh (will require new user/password created)
 ```shell
 $ wsl --unregister Ubuntu
 $ wsl --install Ubuntu
+Enter new UNIX username: 
+New password:
+Retype new password:
 ```
 And if you ever wanted to close WSL all down...
 ```shell
@@ -11,7 +14,7 @@ $ wsl --shutdown
 ---
 
 ## From new UBUNTU terminal
-As part of install enter a suitable username and password, then when presented with prompt, clone this WSL-Setup repo, and kick off the magic... 
+When presented with default Ubuntu prompt, clone this WSL-Setup repo, and kick off the magic... 
 ```shell
 $ git clone https://github.com/shaunpc/WSL-Setup.git
 $ source WSL-Setup/get_ready.sh
